@@ -27,6 +27,13 @@ describe TicTacToe::GameState do
 	end
       end
     end
+    it "responds false to all nought?(x, y)" do
+      3.times do |x|
+	3.times do |y|
+	  expect(game_state.nought?(x, y)).to be_false
+	end
+      end
+    end
   end
 
 end
