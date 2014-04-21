@@ -37,6 +37,9 @@ describe TicTacToe::GameState do
     it "responds false to terminal_state?" do
       expect(game_state.terminal_state?).to be_false
     end
+    it "it responds nil to winner" do 
+      expect(game_state.winner).to be_nil
+    end
   end
 
 end
