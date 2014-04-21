@@ -22,6 +22,13 @@ module TicTacToe
       state[x][y] = :cross
     end
 
+    def nought!(x, y)
+      unless empty?(x, y)
+        raise SpaceNotVacantError, "(#{x}, #{y}) was #{state[x][y]} not empty" 
+      end
+      state[x][y] = :nought
+    end
+
     def empty?(x, y)
       state[x][y] == :empty
     end
@@ -29,7 +36,7 @@ module TicTacToe
       state[x][y] == :cross
     end
     def nought?(x, y)
-      false
+      state[x][y] == :nought
     end
     def terminal_state?
       false
