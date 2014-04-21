@@ -7,31 +7,23 @@ describe TicTacToe::GameState do
 
     it "responds with a 3x3 array to #current_state" do
       expect(game_state.current_state.size).to eq(3)
-      expect(game_state.current_state[0].size).to eq(3)
-      expect(game_state.current_state[1].size).to eq(3)
-      expect(game_state.current_state[2].size).to eq(3)
+      3.times { |n| expect(game_state.current_state[n].size).to eq(3) }
     end
 
     it "responds true to all empty?(x, y)" do
-      3.times do |x|
-	3.times do |y|
-	  expect(game_state.empty?(x, y)).to be_true
-	end
+      (0...3).to_a.product((0...3).to_a).each do |x, y|
+        expect(game_state.empty?(x, y)).to be_true
       end
     end
 
     it "responds false to all cross?(x, y)" do
-      3.times do |x|
-	3.times do |y|
-	  expect(game_state.cross?(x, y)).to be_false
-	end
+      (0...3).to_a.product((0...3).to_a).each do |x, y|
+        expect(game_state.cross?(x, y)).to be_false
       end
     end
     it "responds false to all nought?(x, y)" do
-      3.times do |x|
-	3.times do |y|
-	  expect(game_state.nought?(x, y)).to be_false
-	end
+      (0...3).to_a.product((0...3).to_a).each do |x, y|
+        expect(game_state.nought?(x, y)).to be_false
       end
     end
     it "responds false to terminal_state?" do
