@@ -17,5 +17,8 @@ module TicTacToe
     def nought?(x, y)
       false
     end
+    def terminal_state?
+      false
+    end
   end
 end
