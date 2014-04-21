@@ -32,6 +32,13 @@ describe TicTacToe::GameState do
     it "it responds nil to winner" do 
       expect(game_state.winner).to be_nil
     end
+    context "when cross moves 1x1" do
+      let(:game_state) { TicTacToe::GameState.new.cross!(1, 1) } 
+      
+      it "responds true to #cross?(1, 1)" do
+	expect(game_state.cross?(1, 1)).to be_true
+      end
+    end
   end
 
 end
