@@ -34,6 +34,9 @@ describe TicTacToe::GameState do
 	end
       end
     end
+    it "responds false to terminal_state?" do
+      expect(game_state.terminal_state?).to be_false
+    end
   end
 
 end
