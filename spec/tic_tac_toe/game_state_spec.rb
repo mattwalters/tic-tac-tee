@@ -25,6 +25,12 @@ describe TicTacToe::GameState do
         expect(game_state.cross?(x, y)).to be_false
       end
     end
+    it "can cross!(x, y) for all x,y pairs" do 
+      three_by_three_product.each do |x, y|
+	game_state.cross!(x, y)
+	expect(game_state.cross?(x, y)).to be_true
+      end
+    end
     it "responds false to all nought?(x, y)" do
       three_by_three_product.each do |x, y|
         expect(game_state.nought?(x, y)).to be_false
