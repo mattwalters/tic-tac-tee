@@ -2,7 +2,6 @@ module TicTacToe
   class SpaceNotVacantError < StandardError; end
   class GameState
 
-
     def initialize
       @state = (0...3).to_a.map do 
 	(0...3).to_a.map do
