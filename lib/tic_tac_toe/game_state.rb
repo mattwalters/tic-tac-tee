@@ -8,5 +8,8 @@ module TicTacToe
 	end
       end
     end
+    def empty?(x, y)
+      true
+    end
   end
 end
