@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe TicTacToe::GameState do
 
+  def three_by_three_product
+    (0...3).to_a.product((0...3).to_a)
+  end
+
   context "when game_state is still in initial state" do 
     let(:game_state) { TicTacToe::GameState.new }
 
@@ -11,18 +15,18 @@ describe TicTacToe::GameState do
     end
 
     it "responds true to all empty?(x, y)" do
-      (0...3).to_a.product((0...3).to_a).each do |x, y|
+      three_by_three_product.each do |x, y|
         expect(game_state.empty?(x, y)).to be_true
       end
     end
 
     it "responds false to all cross?(x, y)" do
-      (0...3).to_a.product((0...3).to_a).each do |x, y|
+      three_by_three_product.each do |x, y|
         expect(game_state.cross?(x, y)).to be_false
       end
     end
     it "responds false to all nought?(x, y)" do
-      (0...3).to_a.product((0...3).to_a).each do |x, y|
+      three_by_three_product.each do |x, y|
         expect(game_state.nought?(x, y)).to be_false
       end
     end
@@ -38,9 +42,13 @@ describe TicTacToe::GameState do
 	game_state.cross!(1, 1)
 	game_state
       end	
-      
       it "responds true to #cross?(1, 1)" do
 	expect(game_state.cross?(1, 1)).to be_true
+      end
+      it "responds false to everything but #cross?(1, 1)" do 
+	three_by_three_product.each do |x, y|
+	  expect(game_state.cross?(x, y)).to be_false unless [ x, y ] == [ 1, 1 ]
+	end
       end
     end
   end
