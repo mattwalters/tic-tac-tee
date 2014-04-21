@@ -95,8 +95,8 @@ describe TicTacToe::GameState do
 	end
 	it "should return #{marker} on #winner" do
 	  space_set.each do |x, y|
-	    game_state.send("#{marker}!", x, y)
 	    expect(game_state.winner).to be_nil
+	    game_state.send("#{marker}!", x, y)
 	  end
 	  expect(game_state.winner).to eq(marker)
 	end
