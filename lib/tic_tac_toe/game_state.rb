@@ -20,5 +20,8 @@ module TicTacToe
     def terminal_state?
       false
     end
+    def winner
+      nil
+    end
   end
 end
