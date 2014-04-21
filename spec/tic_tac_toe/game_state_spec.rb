@@ -50,6 +50,9 @@ describe TicTacToe::GameState do
 	  expect(game_state.cross?(x, y)).to be_false unless [ x, y ] == [ 1, 1 ]
 	end
       end
+      it "raises an error if moving to a non-empty space" do
+	expect { game_state.cross!(1, 1) }.to raise_error(TicTacToe::SpaceNotVacantError)
+      end
     end
   end
 
