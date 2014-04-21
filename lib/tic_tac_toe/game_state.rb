@@ -2,10 +2,11 @@ module TicTacToe
   class GameState
 
     def current_state
-      state = [ ]
-      9.times { state << nil }
-      state
+      (0...3).to_a.map do 
+	(0...3).to_a.map do
+	  :empty
+	end
+      end
     end
-
   end
 end

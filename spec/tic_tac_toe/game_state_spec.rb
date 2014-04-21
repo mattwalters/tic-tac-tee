@@ -1,17 +1,26 @@
 require 'spec_helper'
 
 describe TicTacToe::GameState do
+
   context "when game_state is still in initial state" do 
     let(:game_state) { TicTacToe::GameState.new }
 
-    it "responds with a 9 element array to #current_state" do
-      expect(game_state.current_state.size).to eq(9)
+    it "responds with a 3x3 array to #current_state" do
+      expect(game_state.current_state.size).to eq(3)
+      expect(game_state.current_state[0].size).to eq(3)
+      expect(game_state.current_state[1].size).to eq(3)
+      expect(game_state.current_state[2].size).to eq(3)
     end
 
-    it "puts :empty for each of the 9 elements" do
-      expect(game_state.current_state.all? { |space| space == :empty }).to be_true
+    it "puts responds true to all empty?(x, y)" do
+      3.times do |x|
+	3.times do |y|
+	  expect(game_state.empty?(x, y)).to be_true
+	end
+      end
     end
   end
+
 end
 
 
