@@ -8,9 +8,20 @@ ALL_SPACES = (0...3).to_a.product((0...3).to_a)
 ILLEGAL_SPACES = [ -2, -1, 4, 5 ].product([-2, -1, 4, 5 ])
 MARKERS = [ :cross, :nought ]
 
-TERMINAL_COLUMNS = (0...3).map { |x| (0...3).map { |y| [ x, y ] } }
-TERMINAL_ROWS = (0...3).map { |y| (0...3).map { |x| [ x, y ] } }
-TERMINAL_DIAGONALS = [ (0...3).map { |n| [ n, n ] }, (0...3).map { |n| [ 2 - n, n ] } ]
+TERMINAL_COLUMNS = [ 
+  [ [ 0, 0 ], [ 0, 1 ], [ 0, 2 ] ],
+  [ [ 1, 0 ], [ 1, 1 ], [ 1, 2 ] ],
+  [ [ 2, 0 ], [ 2, 1 ], [ 2, 2 ] ]
+]
+TERMINAL_ROWS = [ 
+  [ [ 0, 0 ], [ 1, 0 ], [ 2, 0 ] ],
+  [ [ 0, 1 ], [ 1, 1 ], [ 2, 1 ] ],
+  [ [ 0, 2 ], [ 1, 2 ], [ 2, 2 ] ]
+]
+TERMINAL_DIAGONALS = [ 
+  [ [ 0, 0 ], [ 1, 1 ], [ 2, 2 ] ],
+  [ [ 2, 0 ], [ 1, 1 ], [ 0, 2 ] ]
+]
 TERMINAL_SPACE_SETS = TERMINAL_COLUMNS + TERMINAL_ROWS + TERMINAL_DIAGONALS
 
 describe TicTacToe::GameState do
