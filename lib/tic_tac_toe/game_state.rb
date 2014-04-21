@@ -14,5 +14,8 @@ module TicTacToe
     def cross?(x, y)
       false
     end
+    def nought?(x, y)
+      false
+    end
   end
 end
