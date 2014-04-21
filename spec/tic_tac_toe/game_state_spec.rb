@@ -8,6 +8,11 @@ ALL_SPACES = (0...3).to_a.product((0...3).to_a)
 ILLEGAL_SPACES = [ -2, -1, 4, 5 ].product([-2, -1, 4, 5 ])
 MARKERS = [ :cross, :nought ]
 
+TERMINAL_COLUMNS = (0...3).map { |x| (0...3).map { |y| [ x, y ] } }
+TERMINAL_ROWS = (0...3).map { |y| (0...3).map { |x| [ x, y ] } }
+TERMINAL_DIAGONALS = [ (0...3).map { |n| [ n, n ] }, (0...3).map { |n| [ 2 - n, n ] } ]
+TERMINAL_SPACE_SETS = TERMINAL_COLUMNS + TERMINAL_ROWS + TERMINAL_DIAGONALS
+
 describe TicTacToe::GameState do
 
   context "when game_state is still in initial state" do 
@@ -69,6 +74,15 @@ describe TicTacToe::GameState do
 	end
       end
 
+      TERMINAL_SPACE_SETS.each do |space_set|
+	it "responds true to terminal_state when one marker has #{space_set}" do 
+	  space_set.each do |x, y|
+	    expect(game_state.terminal_state?).to be_false
+	    game_state.send("#{marker}!", x, y)
+	  end
+	  expect(game_state.terminal_state?).to be_true
+	end
+      end
     end
   end
 end
