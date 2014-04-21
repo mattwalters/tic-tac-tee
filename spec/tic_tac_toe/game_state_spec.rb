@@ -12,10 +12,18 @@ describe TicTacToe::GameState do
       expect(game_state.current_state[2].size).to eq(3)
     end
 
-    it "puts responds true to all empty?(x, y)" do
+    it "responds true to all empty?(x, y)" do
       3.times do |x|
 	3.times do |y|
 	  expect(game_state.empty?(x, y)).to be_true
+	end
+      end
+    end
+
+    it "responds false to all cross?(x, y)" do
+      3.times do |x|
+	3.times do |y|
+	  expect(game_state.cross?(x, y)).to be_false
 	end
       end
     end
