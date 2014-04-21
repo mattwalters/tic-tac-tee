@@ -11,5 +11,8 @@ module TicTacToe
     def empty?(x, y)
       true
     end
+    def cross?(x, y)
+      false
+    end
   end
 end
