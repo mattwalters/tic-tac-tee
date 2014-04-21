@@ -11,8 +11,6 @@ module TicTacToe
       end
     end
 
-
-
     def current_state
       state
     end
@@ -49,10 +47,21 @@ module TicTacToe
       end
     end
     def winner
+      markers.each do |marker|
+	terminal_space_sets.each do |space_set|
+	  return marker if space_set.all? do |x, y|
+	    send("#{marker}?", x, y)
+	  end
+	end
+      end
       nil
     end
 
     private 
+
+    def markers
+      [ :cross, :nought ]
+    end
 
     def terminal_columns
       (0...3).map { |x| (0...3).map { |y| [ x, y ] } }
