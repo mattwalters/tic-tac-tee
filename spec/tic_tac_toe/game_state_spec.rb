@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-
 # I think these constants should be helpers
 # but I had some trouble getting them to work quickly
 # this seems to work for now -- would love some pointers
 # on how best to resue code in specs :)
 ALL_SPACES = (0...3).to_a.product((0...3).to_a)
+ILLEGAL_SPACES = [ -2, -1, 4, 5 ].product([-2, -1, 4, 5 ])
 MARKERS = [ :cross, :nought ]
 
 describe TicTacToe::GameState do
@@ -60,6 +60,15 @@ describe TicTacToe::GameState do
 	  end
 	end
       end
+
+      ILLEGAL_SPACES.each do |x, y|
+	it "raises an error if marking an illegal space (#{x}, #{y})" do 
+	  expect { game_state.send("#{marker}!", x, y) }.to raise_error(
+	    TicTacToe::IllegalSpaceError
+	  )
+	end
+      end
+
     end
   end
 end
