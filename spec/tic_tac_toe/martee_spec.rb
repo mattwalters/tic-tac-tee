@@ -94,4 +94,19 @@ describe TicTacToe::Martee do
       expect(game_state.nought?(2, 2)).to be_true
     end
   end
+
+  context "when a corner is open" do 
+    let(:game_state) do
+      game_state = TicTacToe::GameState.new
+      game_state.cross!(0, 0)
+      game_state.cross!(2, 0)
+      game_state.cross!(0, 2)
+      game_state
+    end
+    let(:martee) { TicTacToe::Martee.new(game_state) }
+    it "takes the open corner" do 
+      martee.corner!
+      expect(game_state.nought?(2, 2)).to be_true
+    end
+  end
 end
