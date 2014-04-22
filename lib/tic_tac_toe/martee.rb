@@ -114,6 +114,16 @@ module TicTacToe
       return false
     end
 
+    def corner!
+      [ [0, 0], [0, 2], [2, 0], [2, 2] ].each do |x, y|
+	if game_state.empty?(x, y)
+	  game_state.nought!(x, y)
+	  return true
+	end
+      end
+      return false
+    end
+
     def block!
       game_state.terminal_space_sets.each do |space_set|
 	if space_set.count { |x, y| game_state.cross?(x, y) } == 2 && 
