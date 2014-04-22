@@ -82,4 +82,16 @@ describe TicTacToe::Martee do
     end
   end
 
+  context "when oppenent is in the corner" do
+    let(:game_state) do
+      game_state = TicTacToe::GameState.new
+      game_state.cross!(0, 0)
+      game_state
+    end
+    let(:martee) { TicTacToe::Martee.new(game_state) }
+    it "takes the oppisite corner" do 
+      martee.oppisite_corner!
+      expect(game_state.nought?(2, 2)).to be_true
+    end
+  end
 end
