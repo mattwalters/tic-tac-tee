@@ -94,7 +94,13 @@ describe TicTacToe::Martee do
     end
   end
 
-
-
+  context "when center is open" do
+    let(:game_state) { TicTacToe::GameState.new }
+    let(:martee) { TicTacToe::Martee.new(game_state) }
+    it "takes the center" do 
+      expect(martee.can_center?).to be_true
+      martee.center!
+    end
+  end
 
 end
