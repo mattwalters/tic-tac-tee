@@ -43,64 +43,20 @@ describe TicTacToe::Martee do
     end
   end
 
-  TERMINAL_SPACE_SETS.each do |outer_space_set|
-    TERMINAL_SPACE_SETS.each do |inner_space_set|
-      unless outer_space_set == inner_space_set
-	if outer_space_set.one? { |space| space.in? inner_space_set }
-	  context "when martee can fork" do
-	    let(:game_state) do
-	      game_state = TicTacToe::GameState.new
-	      outer_space = outer_space_set.find { |space| !space.in? inner_space_set }
-	      inner_space = inner_space_set.find { |space| !space.in? outer_space_set }
-	      game_state.nought!(*outer_space)
-	      game_state.nought!(*inner_space)
-	      game_state
-	    end
-	    let(:martee) { TicTacToe::Martee.new(game_state) }
-
-	    it "forks" do 
-	      expect(martee.can_fork?).to be_true
-	      # having a hard time getting this right...
-	    end
-	  end
-	end
-      end
+  context "when martee can fork" do
+    let(:game_state) do
+      game_state = TicTacToe::GameState.new
+      game_state.nought!(0, 0)
+      game_state.nought!(1, 2)
+      game_state.cross!(0, 2)
+      game_state
     end
-  end
-
-
-  TERMINAL_SPACE_SETS.each do |outer_space_set|
-    TERMINAL_SPACE_SETS.each do |inner_space_set|
-      unless outer_space_set == inner_space_set
-	if outer_space_set.one? { |space| space.in? inner_space_set }
-	  context "when martee can block a fork" do
-	    let(:game_state) do
-	      game_state = TicTacToe::GameState.new
-	      outer_space = outer_space_set.find { |space| !space.in? inner_space_set }
-	      inner_space = inner_space_set.find { |space| !space.in? outer_space_set }
-	      game_state.cross!(*outer_space)
-	      game_state.cross!(*inner_space)
-	      game_state
-	    end
-	    let(:martee) { TicTacToe::Martee.new(game_state) }
-
-	    it "block fork" do 
-	      expect(martee.can_block_fork?).to be_true
-	      # having a hard time getting this right...
-	    end
-	  end
-	end
-      end
-    end
-  end
-
-  context "when center is open" do
-    let(:game_state) { TicTacToe::GameState.new }
     let(:martee) { TicTacToe::Martee.new(game_state) }
-    it "takes the center" do 
-      expect(martee.can_center?).to be_true
-      martee.center!
+    it "forks at (1, 1) or (1, 0)" do
+      martee.fork!
+      expect(game_state.nought?(1, 1) || game_state.nought?(1, 0)).to be_true
     end
   end
+
 
 end
