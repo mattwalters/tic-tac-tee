@@ -70,6 +70,26 @@ module TicTacToe
       return false
     end
 
+    def block_fork!
+      game_state.terminal_space_sets.each do |outer_space_set|
+	game_state.terminal_space_sets.each do |inner_space_set|
+	  next if outer_space_set == inner_space_set
+	  next unless outer_space_set.one? { |space| space.in? inner_space_set }
+	  next unless outer_space_set.one? { |space| game_state.cross?(*space) } 
+	  next unless inner_space_set.one? { |space| game_state.cross?(*space) } 
+	  next unless outer_space_set.count { |space| game_state.empty?(*space) } == 2
+	  next unless inner_space_set.count { |space| game_state.empty?(*space) } == 2
+	  target_space = outer_space_set.find do |space| 
+	    space.in?(inner_space_set) && game_state.empty?(*space)
+	  end
+	  next unless target_space
+	  game_state.nought!(*target_space)
+	  return true
+	end
+      end
+      return false
+    end
+
 
     def block!
       game_state.terminal_space_sets.each do |space_set|
