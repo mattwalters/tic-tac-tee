@@ -97,6 +97,23 @@ module TicTacToe
       end
     end
 
+    def oppisite_corner!
+      if game_state.cross?(0, 0) && game_state.empty?(2, 2)
+	game_state.nought!(2, 2)
+	return true
+      elsif game_state.cross?(2, 2) && game_state.empty?(0, 0)
+	game_state.nought!(0, 0)
+	return true
+      elsif game_state.cross?(0, 2) && game_state.empty?(2, 0)
+	game_state.nought!(2, 0)
+	return true
+      elsif game_state.cross?(2, 0) && game_state.empty?(0, 2)
+	game_state.nought!(0, 2)
+	return true
+      end
+      return false
+    end
+
     def block!
       game_state.terminal_space_sets.each do |space_set|
 	if space_set.count { |x, y| game_state.cross?(x, y) } == 2 && 
