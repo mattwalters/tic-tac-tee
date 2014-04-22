@@ -90,6 +90,12 @@ module TicTacToe
       return false
     end
 
+    def center!
+      if game_state.empty?(1, 1)
+	game_state.nought!(1, 1)
+	return true
+      end
+    end
 
     def block!
       game_state.terminal_space_sets.each do |space_set|
