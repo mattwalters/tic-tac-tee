@@ -6,6 +6,7 @@ gem 'rails', '4.0.2'
 gem 'pry'
 gem 'pry-rails', :group => :development
 
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
