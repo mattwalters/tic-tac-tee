@@ -57,8 +57,6 @@ module TicTacToe
       nil
     end
 
-    private 
-
     def markers
       [ :cross, :nought ]
     end
