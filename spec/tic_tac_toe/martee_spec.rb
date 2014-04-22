@@ -73,4 +73,13 @@ describe TicTacToe::Martee do
     end
   end
 
+  context "when the center space is open" do 
+    let(:game_state) { TicTacToe::GameState.new }
+    let(:martee) { TicTacToe::Martee.new(game_state) }
+    it "takes the center space" do
+      martee.center!
+      expect(game_state.nought?(1, 1)).to be_true
+    end
+  end
+
 end
