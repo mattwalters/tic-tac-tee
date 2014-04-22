@@ -58,5 +58,19 @@ describe TicTacToe::Martee do
     end
   end
 
+  context "when martee block fork" do
+    let(:game_state) do
+      game_state = TicTacToe::GameState.new
+      game_state.cross!(0, 0)
+      game_state.cross!(1, 2)
+      game_state.nought!(0, 2)
+      game_state
+    end
+    let(:martee) { TicTacToe::Martee.new(game_state) }
+    it "blocks fork at (1, 1) or (1, 0)" do
+      martee.block_fork!
+      expect(game_state.nought?(1, 1) || game_state.nought?(1, 0)).to be_true
+    end
+  end
 
 end
