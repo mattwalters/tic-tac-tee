@@ -15,6 +15,14 @@ module TicTacToe
       end
     end
 
+    def can_center?
+      game_state.empty?(1, 1)
+    end
+
+    def center!
+      game_state.nought!(1, 1)
+    end
+
     def can_block_fork?
       game_state.terminal_space_sets.each do |outer_space_set|
 	game_state.terminal_space_sets.each do |inner_space_set|
