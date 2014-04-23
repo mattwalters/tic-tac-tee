@@ -9,12 +9,12 @@ module TicTacToe
       actions = [ 
 	:win!, 
 	:block!,
-       	:fork!,
-       	:block_fork!,
-       	:center!,
-       	:oppisite_corner!,
-       	:corner!,
-       	:side! 
+	:fork!,
+	:block_fork!,
+	:center!,
+	:oppisite_corner!,
+	:corner!,
+	:side! 
       ]
       actions.each do |action|
 	break if send(action)
@@ -24,30 +24,49 @@ module TicTacToe
 
     def center!
       if game_state.empty?(1, 1)
-        game_state.nought!(1, 1)
+	game_state.nought!(1, 1)
 	return true
       end
       return false
     end
 
     def block_fork!
-      game_state.terminal_space_sets.each do |outer_space_set|
-	game_state.terminal_space_sets.each do |inner_space_set|
-	  next if outer_space_set == inner_space_set
-	  next unless outer_space_set.one? { |space| space.in? inner_space_set }
-	  next unless outer_space_set.one? { |space| game_state.cross?(*space) } 
-	  next unless inner_space_set.one? { |space| game_state.cross?(*space) } 
-	  next unless outer_space_set.count { |space| game_state.empty?(*space) } == 2
-	  next unless inner_space_set.count { |space| game_state.empty?(*space) } == 2
-	  # this should be a forkable pair
-	  target = outer_space_set.find do |space| 
-	    space.in?(inner_space_set) && game_state.empty?(*space)
+      game_state.terminal_space_sets.each do |space_set|
+	if space_set.one? { |space| game_state.nought?(*space) } &&
+	  space_set.count { |space| game_state.empty?(*space) } == 2
+
+	  target_space = space_set.find do |space|
+	    opp_space = space_set.find do |s|
+	      s != space && game_state.empty?(*s)
+	    end
+	    opp_space && game_state.empty?(*space) &&
+	      does_not_create_opponent_fork(opp_space)
 	  end
-	  game_state.nought!(*target_space)
-	  return true
+	  if target_space
+	    game_state.nought!(*target_space)
+	    return true
+	  end
 	end
       end
       return false
+    end
+
+    def does_not_create_opponent_fork(space)
+
+      sets_containing_space = game_state.terminal_space_sets.select do |space_set|
+	space.in? space_set
+      end
+      sets_containing_space.each do |outer_space_set|
+	sets_containing_space.each do |inner_space_set|
+	  next unless outer_space_set != inner_space_set
+	  unsafe = [ outer_space_set, inner_space_set ].all? do |opp_space_set|
+	    opp_space_set.one? { |s| game_state.cross?(*s) } &&
+	      opp_space_set.count { |s| game_state.empty?(*s) } == 2
+	  end
+	  return false if unsafe
+	end
+      end
+      return true
     end
 
     def fork!
@@ -57,26 +76,6 @@ module TicTacToe
 	  next unless outer_space_set.one? { |space| space.in? inner_space_set }
 	  next unless outer_space_set.one? { |space| game_state.nought?(*space) } 
 	  next unless inner_space_set.one? { |space| game_state.nought?(*space) } 
-	  next unless outer_space_set.count { |space| game_state.empty?(*space) } == 2
-	  next unless inner_space_set.count { |space| game_state.empty?(*space) } == 2
-	  target_space = outer_space_set.find do |space| 
-	    space.in?(inner_space_set) && game_state.empty?(*space)
-	  end
-	  next unless target_space
-	  game_state.nought!(*target_space)
-	  return true
-	end
-      end
-      return false
-    end
-
-    def block_fork!
-      game_state.terminal_space_sets.each do |outer_space_set|
-	game_state.terminal_space_sets.each do |inner_space_set|
-	  next if outer_space_set == inner_space_set
-	  next unless outer_space_set.one? { |space| space.in? inner_space_set }
-	  next unless outer_space_set.one? { |space| game_state.cross?(*space) } 
-	  next unless inner_space_set.one? { |space| game_state.cross?(*space) } 
 	  next unless outer_space_set.count { |space| game_state.empty?(*space) } == 2
 	  next unless inner_space_set.count { |space| game_state.empty?(*space) } == 2
 	  target_space = outer_space_set.find do |space| 
