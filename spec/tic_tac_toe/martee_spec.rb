@@ -69,7 +69,18 @@ describe TicTacToe::Martee do
     let(:martee) { TicTacToe::Martee.new(game_state) }
     it "blocks fork at (1, 1) or (1, 0)" do
       martee.block_fork!
+
       expect(game_state.nought?(1, 1) || game_state.nought?(1, 0)).to be_true
+    end
+    it "does not create a fork for the other player" do
+      game_state = TicTacToe::GameState.new
+      game_state.cross!(0, 0)
+      game_state.nought!(1, 1)
+      game_state.cross!(2, 2)
+      martee = TicTacToe::Martee.new(game_state)
+      martee.block_fork!
+      expect(game_state.nought?(2, 0)).to be_false
+      expect(game_state.nought?(0, 2)).to be_false
     end
   end
 
@@ -110,7 +121,6 @@ describe TicTacToe::Martee do
     end
   end
 
-
   context "when a side is open" do 
     let(:game_state) do
       game_state = TicTacToe::GameState.new
@@ -125,4 +135,6 @@ describe TicTacToe::Martee do
       expect(game_state.nought?(2, 1)).to be_true
     end
   end
+
+
 end
